@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — Zapchast</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header>
+    <h1>Admin <span>Panel</span></h1>
+    <p>Ustamalar va mahsulotlarni boshqarish</p>
+  </header>
+
+  <!-- ============================================================
+       1) USTAMA BO'LIMI (turi bo'yicha)
+       ============================================================ -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2>💰 Turi bo'yicha ustama</h2>
+      <button class="btn btn-primary" id="addMarkupBtn">+ Yangi ustama</button>
+    </div>
+
+    <div class="markups-list" id="markupsList">
+      <div class="panel-loading">Yuklanmoqda...</div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2) MAHSULOTLAR BO'LIMI (qidiruv + tahrirlash)
+       ============================================================ -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2>📦 Mahsulotlar</h2>
+    </div>
+
+    <!-- QIDIRUV -->
+    <div class="search-box">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input id="searchInput" type="text" placeholder="Model, marka yoki zapchast kodini kiriting..." autocomplete="off" />
+      <button id="searchBtn">Qidirish</button>
+    </div>
+
+    <!-- INFO -->
+    <div class="results-info" id="resultsInfo"></div>
+
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      <p>Yuklanmoqda...</p>
+    </div>
+
+    <!-- XATO -->
+    <div class="error-box" id="errorBox"></div>
+
+    <!-- MAHSULOTLAR JADVALI -->
+    <div class="grid" id="grid"></div>
+
+    <!-- PAGINATION -->
+    <div class="pagination" id="pagination"></div>
+  </section>
+
+  <!-- ============================================================
+       MODAL — USTAMA QO'SHISH/TAHRIRLASH
+       ============================================================ -->
+  <div class="modal-backdrop" id="markupModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="markupModalTitle">Yangi ustama</h3>
+        <button class="modal-close" id="markupModalClose">✕</button>
+      </div>
+      <form id="markupForm">
+        <input type="hidden" id="markupId" />
+        <label>
+          Turi
+          <input type="text" id="markupType" placeholder="Ekran, Batareya..." required />
+        </label>
+        <label>
+          Ustama (so'm)
+          <input type="number" id="markupValue" placeholder="30000" min="0" required />
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn" id="markupCancelBtn">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — MAHSULOTNI TAHRIRLASH
+       ============================================================ -->
+  <div class="modal-backdrop" id="productModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="productModalTitle">Mahsulotni tahrirlash</h3>
+        <button class="modal-close" id="productModalClose">✕</button>
+      </div>
+      <form id="productForm">
+        <input type="hidden" id="productId" />
+        <label>
+          Zapchast kodi
+          <input type="text" id="productModel" required />
+        </label>
+        <label>
+          Telefon modeli
+          <input type="text" id="productPhone" required />
+        </label>
+        <label>
+          Telefon markasi
+          <input type="text" id="productBrand" placeholder="Samsung, Iphone..." />
+        </label>
+        <label>
+          Zapchast turi
+          <input type="text" id="productType" required />
+        </label>
+        <label>
+          Narx (so'm)
+          <input type="number" id="productPrice" min="0" required />
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn" id="productCancelBtn">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
